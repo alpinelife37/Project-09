@@ -74,7 +74,7 @@ async function init() {
   console.log("hi")
   try {
     const answers = await promptUser();
-
+    const axios = axiosCall(username);
     const html = generateHTML(answers);
 
     await writeFileAsync("index.html", html);
