@@ -1,8 +1,9 @@
 const axios = require("axios");
 const inquirer = require("inquirer");
-//const extractor = require("extractor");
 const fs = require("fs");
 const util = require("util");
+//const extractor = require("extractor");
+const writeFileAsync = util.promisify(fs.writeFile);
 inquirer
   .prompt([
     {
