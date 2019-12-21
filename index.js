@@ -20,17 +20,34 @@ inquirer
   .then(function({ username }) {
     const queryUrl = `https://api.github.com/users/${username}`;
     axios.get(queryUrl).then(function(res) {
-      console.log(res.data.avatar_url);
-      console.log(res.data.login);
-      console.log(res.data.location);
+      const a = res.data;
+      const avatar = a.avatar_url;
+      const githubUser = a.login;
+      const location = a.location;
+      const githubLink = a.url;
+      const blogLink = a.blog;
+      const bio = a.bio;
+      const repos = a.public_repos;
+      const followers = a.followers;
+      const following = a.following;
+
+      console.log("avatar link", res.data.avatar_url);
+      console.log("github user", res.data.login);
+      console.log("location", res.data.location);
       /// https://www.google.com/maps/place/Richmond,+VA
-      console.log(res.data.url);
-      console.log(res.data.blog);
-      console.log(res.data.bio);
-      console.log(res.data.public_repos);
-      console.log(res.data.followers);
-      console.log(res.data.following);
+      console.log("github link", res.data.url);
+      console.log("blog link", res.data.blog);
+      console.log("bio", res.data.bio);
+      console.log("repos", res.data.public_repos);
+      console.log("followers", res.data.followers);
+      console.log("following", res.data.following);
       //console.log(res);
       //console.log(queryUrl);
+      const queryUrlStars = `https://api.github.com/users/${username}/starred`;
+      axios.get(queryUrl).then(function(stars) {
+        console.log(queryUrlStars);
+        const starsLength = stars.length;
+        console.log(starsLength);
+      });
     });
   });
