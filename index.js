@@ -9,26 +9,57 @@ function generateHTML(githubUserData) {
   return `
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${githubUserData.name}</h1>
-    <p class="lead">I am from ${githubUserData.location}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${githubUserData.githubUser}</li>
-      <li class="list-group-item">LinkedIn: ${githubUserData.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="card">
+          <div class="card">
+            <div class="image"><img src="${githubUserData.avatar}" height="150px" width="150px" alt="Profile Image"></div>
+            <h1 class="name">Hi! My name is ${githubUserData.name}</h1>
+            <div class="location">
+            <a href="https://www.google.com/maps/place/${githubUserData.location}"><i class="fas fa-map-marked-alt"></i>${githubUserData.location}</a>
+           
+            </div>
+            <div class="githublink">
+            <a href="${githubUserData.githubLink}"><i class="fab fa-github"></i>Github</a>
+            </div>
+            <div class="blog">
+            <a href="${githubUserData.blogLink}"><i class="fas fa-blog"></i>Blog</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+       <br />
+        <div class="bio">${githubUserData.bio}</div>
+      </div>
+       <br />
+      <div class="row">
+        <div class="card publicRepos">Number of public repositories ${githubUserData.repos}</div>
+        <div class="card followers">Followers ${githubUserData.followers}</div>
+        <div class="card githubStars">Github Stars ${githubUserData.starsLength}</div>
+        <div class="card following">Following ${githubUserData.following}</div>
+      </div>
+    </div>
+     <script
+      src="https://kit.fontawesome.com/2308dc1f41.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+`;
 }
 
 inquirer
@@ -52,8 +83,7 @@ inquirer
       const avatar = a.avatar_url;
       const githubUser = a.login;
       const location = a.location;
-      /// https://www.google.com/maps/place/Richmond,+VA
-      const githubLink = a.url;
+      const githubLink = a.html_url;
       const blogLink = a.blog;
       const bio = a.bio;
       const repos = a.public_repos;
@@ -62,7 +92,6 @@ inquirer
       const queryUrlStars = `https://api.github.com/users/${username}/starred`;
       axios.get(queryUrlStars).then(function(stars) {
         const starsLength = stars.data.length;
-
         const githubUserData = {
           name,
           avatar,
@@ -76,7 +105,6 @@ inquirer
           following,
           starsLength
         };
-
         const html = generateHTML(githubUserData);
         console.log(html);
       });
