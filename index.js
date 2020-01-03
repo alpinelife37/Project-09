@@ -107,9 +107,17 @@ inquirer
         };
         const html = generateHTML(githubUserData);
         console.log(html);
+        console.log(typeof html);
       });
     });
   });
+// .then(function () {
+//   let createHtml = fs.writeFile("page.html", "utf8", (err, html) => {
+//     if (err) throw err;
+
+//   }
+// })
+
 // .then(function() {
 //   let htmlString = fs.readFile("profile.txt", "utf8", (err, data) => {
 //     if (err) throw err;
