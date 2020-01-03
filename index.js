@@ -47,7 +47,7 @@ promptUser = () => {
     }
   ]);
 };
-promptUser().then(function({ username }) {
+promptUser().then(function({ username, colors }) {
   const queryUrl = `https://api.github.com/users/${username}`;
   axios.get(queryUrl).then(function(res) {
     const a = res.data;
@@ -78,13 +78,13 @@ promptUser().then(function({ username }) {
         starsLength
       };
       console.log(queryUrl);
-      const html = generateHTML(githubUserData);
+      const html = generateHTML(githubUserData, colors);
       writeFileAsync("index.html", html);
       console.log(html);
     });
   });
 });
-function generateHTML(githubUserData, colors) {
+function generateHTML(githubUserData, selectedColor) {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -97,7 +97,7 @@ function generateHTML(githubUserData, colors) {
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
       <title>Github Profile</title>
-    <style>   @page {
+    <style>  @page {
             margin: 0;
           }
          *,
@@ -113,7 +113,7 @@ function generateHTML(githubUserData, colors) {
          height: 100%;
          }
          .wrapper {
-         
+         background-color: ${colors[selectedColor].wrapperBackground};
          padding-top: 100px;
          }
          body {
@@ -155,7 +155,8 @@ function generateHTML(githubUserData, colors) {
          display: flex;
          justify-content: center;
          flex-wrap: wrap;
-       
+         background-color: ${colors[selectedColor].headerBackground};
+         color: ${colors[selectedColor].headerColor};
          padding: 10px;
          width: 95%;
          border-radius: 6px;
@@ -166,7 +167,7 @@ function generateHTML(githubUserData, colors) {
          border-radius: 50%;
          object-fit: cover;
          margin-top: -75px;
-         
+         border: 6px solid ${colors[selectedColor].photoBorderColor};
          box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
          }
          .photo-header h1, .photo-header h2 {
@@ -209,7 +210,8 @@ function generateHTML(githubUserData, colors) {
          .card {
            padding: 20px;
            border-radius: 6px;
-           
+           background-color: ${colors[selectedColor].headerBackground};
+           color: ${colors[selectedColor].headerColor};
            margin: 20px;
          }
          
