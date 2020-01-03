@@ -97,7 +97,7 @@ function generateHTML(githubUserData, colors) {
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
       <title>Github Profile</title>
-    <style>@page {
+    <style>   @page {
             margin: 0;
           }
          *,
@@ -113,7 +113,7 @@ function generateHTML(githubUserData, colors) {
          height: 100%;
          }
          .wrapper {
-         background-color: ${colors[data.color].wrapperBackground};
+         
          padding-top: 100px;
          }
          body {
@@ -155,8 +155,7 @@ function generateHTML(githubUserData, colors) {
          display: flex;
          justify-content: center;
          flex-wrap: wrap;
-         background-color: ${colors[data.color].headerBackground};
-         color: ${colors[data.color].headerColor};
+       
          padding: 10px;
          width: 95%;
          border-radius: 6px;
@@ -167,7 +166,7 @@ function generateHTML(githubUserData, colors) {
          border-radius: 50%;
          object-fit: cover;
          margin-top: -75px;
-         border: 6px solid ${colors[data.color].photoBorderColor};
+         
          box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
          }
          .photo-header h1, .photo-header h2 {
@@ -210,8 +209,7 @@ function generateHTML(githubUserData, colors) {
          .card {
            padding: 20px;
            border-radius: 6px;
-           background-color: ${colors[data.color].headerBackground};
-           color: ${colors[data.color].headerColor};
+           
            margin: 20px;
          }
          
@@ -231,64 +229,65 @@ function generateHTML(githubUserData, colors) {
             zoom: .75; 
           } 
          }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="card">
-          <div class="card">
-            <div class="image"><img src="${
-              githubUserData.avatar
-            }" height="150px" width="150px" alt="Profile Image"></div>
-            <h1 class="name">Hi! My name is ${githubUserData.name}</h1>
-            <div class="location">
-            <a href="https://www.google.com/maps/place/${
-              githubUserData.location
-            }"><i class="fas fa-map-marked-alt"></i>${
-    githubUserData.location
-  }</a>
-           
-            </div>
-            <div class="githublink">
-            <a href="${
-              githubUserData.githubLink
-            }"><i class="fab fa-github"></i>Github</a>
-            </div>
-            <div class="blog">
-            <a href="${
-              githubUserData.blogLink
-            }"><i class="fas fa-blog"></i>Blog</a>
-            </div>
+      </style>
+      <body>
+      <div class="wrapper">
+      
+      <div class="photo-header">
+          <img class="" src="${githubUserData.avatar}">
+          <h1>Hi!</h1>
+          <h1>My name is ${githubUserData.name}</h1>
+          <h4>Currently @ ${githubUserData.company}</h4>
+          <div class="links-nav">
+              <h6 class="nav-link"><i class="fas fa-map-marker-alt"></i> ${githubUserData.location}</h6>
+              <a class="nav-link" href="${githubUserData.html}"><i
+                      class="fab fa-github"></i> GitHub</a>
+              <a class="nav-link" href="${githubUserData.blogLink}"><i class="fas fa-rss"></i> Blog</a>
           </div>
-        </div>
       </div>
-      <div class="row">
-       <br />
-        <div class="bio">${githubUserData.bio}</div>
+      
+      <main>
+
+          <div class="container">
+                
+          <h1 class="col">${githubUserData.bio}</h1>
+          
+          <div class="card-deck">
+
+            <div class="card col col-sm-6">
+              <h2>Followers</h2>
+              <h3>${githubUserData.followers}</h3>
+            </div>
+
+            <div class="card col col-sm-6">
+              <h2>Following</h2>
+              <h3>${githubUserData.following}</h3>
+            </div>
+
+          </div>
+
+          <br>
+
+          <div class="card-deck">
+
+            <div class="card col col-sm-6">
+              <h2>GitHub stars</h2>
+              <h3>${githubUserData.starsLength}</h3>
+            </div>
+
+            <div class="card col col-sm-6">
+              <h2>Public Repos</h2>
+              <h3>${githubUserData.repos}</h3>
+            </div>  
+
+          </div>
+          <br>
+
       </div>
-       <br />
-      <div class="row">
-        <div class="card col col-sm-6 publicRepos">Number of public repositories ${
-          githubUserData.repos
-        }</div>
-        <div class="card col col-sm-6 followers">Followers ${
-          githubUserData.followers
-        }</div>
-        <div class="card col col-sm-6 githubStars">Github Stars ${
-          githubUserData.starsLength
-        }</div>
-        <div class="card col col-sm-6 following">Following ${
-          githubUserData.following
-        }</div>
-      </div>
-    </div>
-     <script
-      src="https://kit.fontawesome.com/2308dc1f41.js"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+      </main>
+  </div>
+      </body>
+      </html>
 
 `;
 }
