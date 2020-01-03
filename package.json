@@ -1,5 +1,5 @@
 {
-  "name": "project-09",
+  "name": "github-profile-pdf-generator",
   "version": "1.0.0",
   "description": "Node App - Github Developer Profile Generator to .PDF",
   "main": "index.js",
