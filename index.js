@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 const htmlToPdf = require("electron-html-to");
+const electron = require("electron");
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const colors = {
@@ -62,25 +63,44 @@ promptUser().then(function({ username, colors }) {
     const followers = a.followers;
     const following = a.following;
     const queryUrlStars = `https://api.github.com/users/${username}/starred`;
-    axios.get(queryUrlStars).then(function(stars) {
-      const starsLength = stars.data.length;
-      const githubUserData = {
-        name,
-        avatar,
-        githubUser,
-        location,
-        githubLink,
-        blogLink,
-        bio,
-        repos,
-        followers,
-        following,
-        starsLength
-      };
-      console.log(githubLink);
-      const html = generateHTML(githubUserData, colors);
-      writeFileAsync("index.html", html);
-    });
+    axios
+      .get(queryUrlStars)
+      .then(function(stars) {
+        const starsLength = stars.data.length;
+        const githubUserData = {
+          name,
+          avatar,
+          githubUser,
+          location,
+          githubLink,
+          blogLink,
+          bio,
+          repos,
+          followers,
+          following,
+          starsLength
+        };
+        const html = generateHTML(githubUserData, colors);
+        writeFileAsync("index.html", html);
+      })
+      //////////////////////////////////////////
+      .then(() => {
+        readFileAsync("index.html", "utf8").then(htmlString => {
+          const conversion = htmlToPdf({
+            converterPath: htmlToPdf.converters.PDF
+          });
+
+          conversion({ html: htmlString }, function(err, result) {
+            if (err) {
+              return console.error(err);
+            }
+            console.log("PDF Pages: " + result.numberOfPages);
+            result.stream.pipe(fs.createWriteStream("gitHubProfile.pdf"));
+            conversion.kill();
+          });
+        });
+      });
+    /////////////////////////////////////////////////
   });
 });
 function generateHTML(githubUserData, selectedColor) {
