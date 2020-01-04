@@ -77,10 +77,9 @@ promptUser().then(function({ username, colors }) {
         following,
         starsLength
       };
-      console.log(queryUrl);
+      console.log(githubLink);
       const html = generateHTML(githubUserData, colors);
       writeFileAsync("index.html", html);
-      console.log(html);
     });
   });
 });
@@ -239,10 +238,9 @@ function generateHTML(githubUserData, selectedColor) {
           <img class="" src="${githubUserData.avatar}">
           <h1>Hi!</h1>
           <h1>My name is ${githubUserData.name}</h1>
-          <h4>Currently @ ${githubUserData.company}</h4>
-          <div class="links-nav">
-              <h6 class="nav-link"><i class="fas fa-map-marker-alt"></i> ${githubUserData.location}</h6>
-              <a class="nav-link" href="${githubUserData.html}"><i
+            <div class="links-nav">
+              <a class="nav-link" href="https://www.google.com/maps/place/${githubUserData.location}"><i class="fas fa-map-marker-alt">${githubUserData.location}</i> </a>
+              <a class="nav-link" href="${githubUserData.githubLink}"><i
                       class="fab fa-github"></i> GitHub</a>
               <a class="nav-link" href="${githubUserData.blogLink}"><i class="fas fa-rss"></i> Blog</a>
           </div>
