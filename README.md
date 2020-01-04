@@ -12,7 +12,7 @@ Node app that quickly generates a professional profile in .pdf format. When the 
 
 1. Install the required modules by typing "npm install" or "npm i" in the containing folder using your code editor terminal.
 2. Run the app by typing "node index.js" or "node index."
-3. Enter the Github user name and choose a color them for the profile.
+3. Enter the Github user name and choose a color theme for the profile.
 4. The new .pdf profile will be created in that same folder.
 
 ### BUILT WITH
