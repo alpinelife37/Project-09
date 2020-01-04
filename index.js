@@ -32,7 +32,6 @@ const colors = {
     photoBorderColor: "white"
   }
 };
-
 promptUser = () => {
   return inquirer.prompt([
     {
@@ -83,24 +82,20 @@ promptUser().then(function({ username, colors }) {
         const html = generateHTML(githubUserData, colors);
         writeFileAsync("index.html", html);
       })
-      //////////////////////////////////////////
       .then(() => {
         readFileAsync("index.html", "utf8").then(htmlString => {
           const conversion = htmlToPdf({
             converterPath: htmlToPdf.converters.PDF
           });
-
           conversion({ html: htmlString }, function(err, result) {
             if (err) {
               return console.error(err);
             }
-            console.log("PDF Pages: " + result.numberOfPages);
-            result.stream.pipe(fs.createWriteStream("gitHubProfile.pdf"));
+            result.stream.pipe(fs.createWriteStream("Profile.pdf"));
             conversion.kill();
           });
         });
       });
-    /////////////////////////////////////////////////
   });
 });
 function generateHTML(githubUserData, selectedColor) {
@@ -112,10 +107,9 @@ function generateHTML(githubUserData, selectedColor) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
-      <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
-      <title>Github Profile</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+    <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
+    <title>Github Profile</title>
     <style>  @page {
             margin: 0;
           }
@@ -252,62 +246,54 @@ function generateHTML(githubUserData, selectedColor) {
          }
       </style>
       <body>
-      <div class="wrapper">
-      
+       <div class="wrapper">
       <div class="photo-header">
-          <img class="" src="${githubUserData.avatar}">
-          <h1>Hi!</h1>
-          <h1>My name is ${githubUserData.name}</h1>
-            <div class="links-nav">
-              <a class="nav-link" href="https://www.google.com/maps/place/${githubUserData.location}"><i class="fas fa-map-marker-alt">${githubUserData.location}</i> </a>
-              <a class="nav-link" href="${githubUserData.githubLink}"><i
-                      class="fab fa-github"></i> GitHub</a>
-              <a class="nav-link" href="${githubUserData.blogLink}"><i class="fas fa-rss"></i> Blog</a>
-          </div>
+        <img class="" src="${githubUserData.avatar}" />
+        <h1>Hi!</h1>
+        <h1>My name is ${githubUserData.name}</h1>
+        <div class="links-nav">
+          <a
+            class="nav-link"
+            href="https://www.google.com/maps/place/${githubUserData.location}"
+            ><i class="fas fa-map-marker-alt">${githubUserData.location}</i>
+          </a>
+          <a class="nav-link" href="${githubUserData.githubLink}"
+            ><i class="fab fa-github"></i> GitHub</a
+          >
+          <a class="nav-link" href="${githubUserData.blogLink}"
+            ><i class="fas fa-rss"></i> Blog</a
+          >
+        </div>
       </div>
-      
       <main>
-
-          <div class="container">
-                
+        <div class="container">
           <h1 class="col">${githubUserData.bio}</h1>
-          
           <div class="card-deck">
-
             <div class="card col col-sm-6">
               <h2>Followers</h2>
               <h3>${githubUserData.followers}</h3>
             </div>
-
             <div class="card col col-sm-6">
               <h2>Following</h2>
               <h3>${githubUserData.following}</h3>
             </div>
-
           </div>
-
-          <br>
-
+          <br />
           <div class="card-deck">
-
             <div class="card col col-sm-6">
               <h2>GitHub stars</h2>
               <h3>${githubUserData.starsLength}</h3>
             </div>
-
             <div class="card col col-sm-6">
               <h2>Public Repos</h2>
               <h3>${githubUserData.repos}</h3>
-            </div>  
-
+            </div>
           </div>
-          <br>
-
-      </div>
+          <br />
+        </div>
       </main>
-  </div>
-      </body>
+    </div>
+       </body>
       </html>
-
 `;
 }
