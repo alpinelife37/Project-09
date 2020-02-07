@@ -1,55 +1,54 @@
-const axios = require("axios");
-const inquirer = require("inquirer");
-const fs = require("fs");
-const util = require("util");
-const htmlToPdf = require("electron-html-to");
-const electron = require("electron");
+const axios = require('axios');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
+const htmlToPdf = require('electron-html-to');
+const electron = require('electron');
 const writeFileAsync = util.promisify(fs.writeFile);
 const readFileAsync = util.promisify(fs.readFile);
 const colors = {
   green: {
-    wrapperBackground: "#E6E1C3",
-    headerBackground: "#C1C72C",
-    headerColor: "black",
-    photoBorderColor: "#black"
+    wrapperBackground: '#E6E1C3',
+    headerBackground: '#C1C72C',
+    headerColor: 'black',
+    photoBorderColor: '#black',
   },
   blue: {
-    wrapperBackground: "#5F64D3",
-    headerBackground: "#26175A",
-    headerColor: "white",
-    photoBorderColor: "#73448C"
+    wrapperBackground: '#5F64D3',
+    headerBackground: '#26175A',
+    headerColor: 'white',
+    photoBorderColor: '#73448C',
   },
   pink: {
-    wrapperBackground: "#879CDF",
-    headerBackground: "#FF8374",
-    headerColor: "white",
-    photoBorderColor: "#FEE24C"
+    wrapperBackground: '#879CDF',
+    headerBackground: '#FF8374',
+    headerColor: 'white',
+    photoBorderColor: '#FEE24C',
   },
   red: {
-    wrapperBackground: "#DE9967",
-    headerBackground: "#870603",
-    headerColor: "white",
-    photoBorderColor: "white"
-  }
+    wrapperBackground: '#DE9967',
+    headerBackground: '#870603',
+    headerColor: 'white',
+    photoBorderColor: 'white',
+  },
 };
-promptUser = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "username",
-      message: "what is your gitHub username?"
-    },
-    {
-      type: "list",
-      name: "colors",
-      message: "What color would you like your profile's template to be?",
-      choices: ["green", "blue", "pink", "red"]
-    }
-  ]);
-};
+// eslint-disable-next-line no-undef
+promptUser = () => inquirer.prompt([
+  {
+    type: 'input',
+    name: 'username',
+    message: 'what is your gitHub username?',
+  },
+  {
+    type: 'list',
+    name: 'colors',
+    message: "What color would you like your profile's template to be?",
+    choices: ['green', 'blue', 'pink', 'red'],
+  },
+]);
 promptUser().then(function({ username, colors }) {
   const queryUrl = `https://api.github.com/users/${username}`;
-  axios.get(queryUrl).then(function(res) {
+  axios.get(queryUrl).then((res) => {
     const a = res.data;
     const name = a.name;
     const avatar = a.avatar_url;
@@ -64,7 +63,7 @@ promptUser().then(function({ username, colors }) {
     const queryUrlStars = `https://api.github.com/users/${username}/starred`;
     axios
       .get(queryUrlStars)
-      .then(function(stars) {
+      .then((stars) => {
         const starsLength = stars.data.length;
         const githubUserData = {
           name,
@@ -87,7 +86,7 @@ promptUser().then(function({ username, colors }) {
           const conversion = htmlToPdf({
             converterPath: htmlToPdf.converters.PDF
           });
-          conversion({ html: htmlString }, function(err, result) {
+          conversion({ html: htmlString }, (err, result) => {
             if (err) {
               return console.error(err);
             }
